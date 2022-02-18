@@ -1,12 +1,21 @@
 package com.naidiuk.entity;
 
 public class User {
+    private int id;
     private String name;
     private String surname;
     private int salary;
-    private int workExperience;
+    private int workExperienceYears;
 
     public User() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -32,21 +41,22 @@ public class User {
         this.salary = salary;
     }
 
-    public int getWorkExperience() {
-        return workExperience;
+    public int getWorkExperienceYears() {
+        return workExperienceYears;
     }
 
-    public void setWorkExperience(int workExperience) {
-        this.workExperience = workExperience;
+    public void setWorkExperienceYears(int workExperienceYears) {
+        this.workExperienceYears = workExperienceYears;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", salary=" + salary +
-                ", workExperience=" + workExperience +
+                ", workExperienceYears=" + workExperienceYears +
                 "}";
     }
 }
