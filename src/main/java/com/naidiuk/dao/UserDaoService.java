@@ -5,9 +5,9 @@ import com.naidiuk.entity.User;
 import java.util.List;
 
 public interface UserDaoService {
-    boolean addUser(User user);
-    boolean deleteUser(User user);
-    boolean updateUser(User user);
+    void addUser(User user);
+    void deleteUser(int userId);
+    void updateUser(User user);
     User getUser(int userId);
     List<User> getAllUsers();
     User getUserWithMaxId();

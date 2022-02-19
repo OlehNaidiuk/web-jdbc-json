@@ -6,37 +6,36 @@ import com.naidiuk.entity.User;
 
 import java.util.List;
 
-public class Default implements Service {
+public class ClientImplementation implements ClientService {
     private final UserDaoService userDaoService = new UserDaoJDBC();
 
     @Override
-    public boolean addUser(User user) {
+    public void addUser(User user) {
         userDaoService.addUser(user);
-        return false;
     }
 
     @Override
-    public boolean deleteUser(User user) {
-        return false;
+    public void deleteUser(int userId) {
+        userDaoService.deleteUser(userId);
     }
 
     @Override
-    public boolean updateUser(User user) {
-        return false;
+    public void updateUser(User user) {
+        userDaoService.updateUser(user);
     }
 
     @Override
     public User getUser(int userId) {
-        return null;
+        return userDaoService.getUser(userId);
     }
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+        return userDaoService.getAllUsers();
     }
 
     @Override
     public User getUserWithMaxId() {
-        return null;
+        return userDaoService.getUserWithMaxId();
     }
 }
