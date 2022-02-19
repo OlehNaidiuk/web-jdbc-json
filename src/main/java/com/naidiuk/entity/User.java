@@ -48,15 +48,4 @@ public class User {
     public void setWorkExperienceYears(int workExperienceYears) {
         this.workExperienceYears = workExperienceYears;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", salary=" + salary +
-                ", workExperienceYears=" + workExperienceYears +
-                "}";
-    }
 }
