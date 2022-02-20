@@ -1,8 +1,8 @@
-package com.naidiuk.dao;
+package com.naidiuk.webJdbcJson.dao;
 
-import com.naidiuk.entity.User;
-import com.naidiuk.errors.JDBCConnectionException;
-import com.naidiuk.errors.JDBCDriverException;
+import com.naidiuk.webJdbcJson.entity.User;
+import com.naidiuk.webJdbcJson.errors.JDBCConnectionException;
+import com.naidiuk.webJdbcJson.errors.JDBCDriverException;
 
 import java.sql.*;
 import java.util.ArrayList;

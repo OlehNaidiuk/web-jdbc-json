@@ -1,4 +1,4 @@
-package com.naidiuk.entity;
+package com.naidiuk.webJdbcJson.entity;
 
 public class User {
     private String name;

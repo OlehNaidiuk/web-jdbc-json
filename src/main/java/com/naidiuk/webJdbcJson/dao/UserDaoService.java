@@ -1,6 +1,6 @@
-package com.naidiuk.dao;
+package com.naidiuk.webJdbcJson.dao;
 
-import com.naidiuk.entity.User;
+import com.naidiuk.webJdbcJson.entity.User;
 
 import java.util.List;
 

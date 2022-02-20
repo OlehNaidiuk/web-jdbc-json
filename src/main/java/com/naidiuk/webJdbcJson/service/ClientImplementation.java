@@ -1,9 +1,9 @@
-package com.naidiuk.service;
+package com.naidiuk.webJdbcJson.service;
 
-import com.naidiuk.dao.UserDaoJDBC;
-import com.naidiuk.dao.UserDaoService;
-import com.naidiuk.entity.User;
-import com.naidiuk.util.InsuranceExperienceCalculator;
+import com.naidiuk.webJdbcJson.dao.UserDaoJDBC;
+import com.naidiuk.webJdbcJson.dao.UserDaoService;
+import com.naidiuk.webJdbcJson.entity.User;
+import com.naidiuk.webJdbcJson.util.InsuranceExperienceCalculator;
 
 import java.util.List;
 

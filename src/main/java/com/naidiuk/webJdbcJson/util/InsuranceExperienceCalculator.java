@@ -1,4 +1,4 @@
-package com.naidiuk.util;
+package com.naidiuk.webJdbcJson.util;
 
 public class InsuranceExperienceCalculator {
     public static final int REQUIRED_YEARS_UNTIL_RETIREMENT = 30;

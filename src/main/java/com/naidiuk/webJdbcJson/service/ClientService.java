@@ -1,6 +1,6 @@
-package com.naidiuk.service;
+package com.naidiuk.webJdbcJson.service;
 
-import com.naidiuk.entity.User;
+import com.naidiuk.webJdbcJson.entity.User;
 
 import java.util.List;
 

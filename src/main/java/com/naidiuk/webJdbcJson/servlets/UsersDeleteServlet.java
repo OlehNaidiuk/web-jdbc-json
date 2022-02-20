@@ -1,7 +1,7 @@
-package com.naidiuk.servlets;
+package com.naidiuk.webJdbcJson.servlets;
 
-import com.naidiuk.service.ClientImplementation;
-import com.naidiuk.service.ClientService;
+import com.naidiuk.webJdbcJson.service.ClientImplementation;
+import com.naidiuk.webJdbcJson.service.ClientService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/users/delete")
 public class UsersDeleteServlet extends HttpServlet {
-    private final ClientService clientService = new ClientImplementation();
 
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) {
+        ClientService clientService = new ClientImplementation();
+
         String userId = request.getParameter("id");
 
         clientService.deleteUser(Integer.parseInt(userId));

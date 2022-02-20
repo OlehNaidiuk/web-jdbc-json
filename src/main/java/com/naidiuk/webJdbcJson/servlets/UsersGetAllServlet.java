@@ -1,10 +1,10 @@
-package com.naidiuk.servlets;
+package com.naidiuk.webJdbcJson.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.naidiuk.entity.User;
-import com.naidiuk.service.ClientImplementation;
-import com.naidiuk.service.ClientService;
+import com.naidiuk.webJdbcJson.entity.User;
+import com.naidiuk.webJdbcJson.service.ClientImplementation;
+import com.naidiuk.webJdbcJson.service.ClientService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,10 +16,11 @@ import java.util.List;
 
 @WebServlet("/users/get-all")
 public class UsersGetAllServlet extends HttpServlet {
-    private final ClientService clientService = new ClientImplementation();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ClientService clientService = new ClientImplementation();
+
         List<User> users = clientService.getAllUsers();
 
         ObjectMapper objectMapper = new ObjectMapper();

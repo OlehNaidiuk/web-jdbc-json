@@ -1,8 +1,8 @@
-package com.naidiuk.servlets;
+package com.naidiuk.webJdbcJson.servlets;
 
-import com.naidiuk.entity.User;
-import com.naidiuk.service.ClientImplementation;
-import com.naidiuk.service.ClientService;
+import com.naidiuk.webJdbcJson.entity.User;
+import com.naidiuk.webJdbcJson.service.ClientImplementation;
+import com.naidiuk.webJdbcJson.service.ClientService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/users/add")
 public class UsersAddServlet extends HttpServlet {
-    private final ClientService clientService = new ClientImplementation();
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
+        ClientService clientService = new ClientImplementation();
+
         User user = createUserFromRequest(request);
 
         clientService.addUser(user);

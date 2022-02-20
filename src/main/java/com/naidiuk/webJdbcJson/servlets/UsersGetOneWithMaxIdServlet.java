@@ -1,10 +1,10 @@
-package com.naidiuk.servlets;
+package com.naidiuk.webJdbcJson.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.naidiuk.entity.User;
-import com.naidiuk.service.ClientImplementation;
-import com.naidiuk.service.ClientService;
+import com.naidiuk.webJdbcJson.entity.User;
+import com.naidiuk.webJdbcJson.service.ClientImplementation;
+import com.naidiuk.webJdbcJson.service.ClientService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,10 +15,11 @@ import java.io.PrintWriter;
 
 @WebServlet("/users/get-one-with-max-id")
 public class UsersGetOneWithMaxIdServlet extends HttpServlet {
-    private final ClientService clientService = new ClientImplementation();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ClientService clientService = new ClientImplementation();
+
         User user = clientService.getUserWithMaxId();
 
         ObjectMapper objectMapper = new ObjectMapper();
