@@ -21,9 +21,7 @@ public class UsersGetOneServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userId = request.getParameter("id");
 
-        int id = Integer.parseInt(userId);
-
-        User user = clientService.getUser(id);
+        User user = clientService.getUserById(Integer.parseInt(userId));
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);

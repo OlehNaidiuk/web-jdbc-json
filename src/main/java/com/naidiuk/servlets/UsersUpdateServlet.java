@@ -9,25 +9,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/user/update")
+@WebServlet("/users/update")
 public class UsersUpdateServlet extends HttpServlet {
     private final ClientService clientService = new ClientImplementation();
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+    public void doPut(HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getParameter("id");
+
+        User updatedUser = createUpdatedUserFromRequest(request);
+
+        clientService.updateUser(updatedUser, Integer.parseInt(userId));
+    }
+
+    private User createUpdatedUserFromRequest(HttpServletRequest request) {
         String userName = request.getParameter("name");
         String userSurname = request.getParameter("surname");
         String userSalary = request.getParameter("salary");
         String userWorkExperienceYears = request.getParameter("work_experience_years");
 
-        User user = new User();
-        user.setId(Integer.parseInt(userId));
-        user.setName(userName);
-        user.setSurname(userSurname);
-        user.setSalary(Integer.parseInt(userSalary));
-        user.setWorkExperienceYears(Integer.parseInt(userWorkExperienceYears));
+        User updatedUser = new User();
+        updatedUser.setName(userName);
+        updatedUser.setSurname(userSurname);
+        updatedUser.setSalary(Integer.parseInt(userSalary));
+        updatedUser.setWorkExperienceYears(Integer.parseInt(userWorkExperienceYears));
 
-        clientService.updateUser(user);
+        return updatedUser;
     }
 }

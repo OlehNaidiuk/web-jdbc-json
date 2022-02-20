@@ -3,6 +3,7 @@ package com.naidiuk.service;
 import com.naidiuk.dao.UserDaoJDBC;
 import com.naidiuk.dao.UserDaoService;
 import com.naidiuk.entity.User;
+import com.naidiuk.util.InsuranceExperienceCalculator;
 
 import java.util.List;
 
@@ -15,18 +16,18 @@ public class ClientImplementation implements ClientService {
     }
 
     @Override
-    public void deleteUser(int userId) {
-        userDaoService.deleteUser(userId);
+    public void deleteUser(int id) {
+        userDaoService.deleteUser(id);
     }
 
     @Override
-    public void updateUser(User user) {
-        userDaoService.updateUser(user);
+    public void updateUser(User updatedUser, int id) {
+        userDaoService.updateUser(updatedUser, id);
     }
 
     @Override
-    public User getUser(int userId) {
-        return userDaoService.getUser(userId);
+    public User getUserById(int id) {
+        return userDaoService.getUserById(id);
     }
 
     @Override
@@ -37,5 +38,12 @@ public class ClientImplementation implements ClientService {
     @Override
     public User getUserWithMaxId() {
         return userDaoService.getUserWithMaxId();
+    }
+
+    @Override
+    public int calculateRemainingYearsUntilRetirement(int id) {
+        User user = userDaoService.getUserById(id);
+        InsuranceExperienceCalculator insuranceExperienceCalculator = new InsuranceExperienceCalculator();
+        return insuranceExperienceCalculator.calculateRemainingYearsUntilRetirement(user.getWorkExperienceYears());
     }
 }

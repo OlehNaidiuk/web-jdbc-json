@@ -16,8 +16,6 @@ public class UsersDeleteServlet extends HttpServlet {
     public void doDelete(HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getParameter("id");
 
-        int id = Integer.parseInt(userId);
-
-        clientService.deleteUser(id);
+        clientService.deleteUser(Integer.parseInt(userId));
     }
 }

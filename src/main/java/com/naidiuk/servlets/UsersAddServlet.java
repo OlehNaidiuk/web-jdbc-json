@@ -15,19 +15,23 @@ public class UsersAddServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String userId = request.getParameter("id");
+        User user = createUserFromRequest(request);
+
+        clientService.addUser(user);
+    }
+
+    private User createUserFromRequest(HttpServletRequest request) {
         String userName = request.getParameter("name");
         String userSurname = request.getParameter("surname");
         String userSalary = request.getParameter("salary");
         String userWorkExperienceYears = request.getParameter("work_experience_years");
 
         User user = new User();
-        user.setId(Integer.parseInt(userId));
         user.setName(userName);
         user.setSurname(userSurname);
         user.setSalary(Integer.parseInt(userSalary));
         user.setWorkExperienceYears(Integer.parseInt(userWorkExperienceYears));
 
-        clientService.addUser(user);
+        return user;
     }
 }
