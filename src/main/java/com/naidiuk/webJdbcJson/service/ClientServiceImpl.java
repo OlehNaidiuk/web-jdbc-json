@@ -8,7 +8,15 @@ import com.naidiuk.webJdbcJson.entity.User;
 import java.util.List;
 
 public class ClientServiceImpl implements ClientService {
-    private final UserDaoService userDaoService = new UserDaoJDBC();
+    private final UserDaoService userDaoService;
+
+    public ClientServiceImpl() {
+        userDaoService = new UserDaoJDBC();
+    }
+
+    public ClientServiceImpl(UserDaoJDBC userDaoJDBC) {
+        this.userDaoService = userDaoJDBC;
+    }
 
     @Override
     public void addUser(User user) {
