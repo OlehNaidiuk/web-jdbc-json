@@ -2,7 +2,7 @@ package com.naidiuk.webJdbcJson.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.naidiuk.webJdbcJson.entity.User;
+import com.naidiuk.webJdbcJson.dto.UserDto;
 import com.naidiuk.webJdbcJson.service.ClientServiceImpl;
 import com.naidiuk.webJdbcJson.service.ClientService;
 
@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/users/get-one-plus-remaining-years-until-retirement")
-public class UsersGetOnePlusRemainingYearsUntilRetirement extends HttpServlet {
+@WebServlet("/users/user-with-years-until-retirement")
+public class UsersWithYearsUntilRetirementServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -22,16 +22,14 @@ public class UsersGetOnePlusRemainingYearsUntilRetirement extends HttpServlet {
 
         String userId = request.getParameter("id");
 
-        User user = clientService.getUserById(Integer.parseInt(userId));
+        UserDto userDto = clientService.getUserByIdWithYearsUntilRetirement(Integer.parseInt(userId));
 
-        int yearsUntilRetirement = clientService.calculateRemainingYearsUntilRetirement(user.getWorkExperienceYears());
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         PrintWriter printWriter = response.getWriter();
-        printWriter.write(objectMapper.writeValueAsString(user));
-        printWriter.write("\nyearsUntilRetirement : " + yearsUntilRetirement);
+        printWriter.write(objectMapper.writeValueAsString(userDto));
         printWriter.flush();
         printWriter.close();
     }

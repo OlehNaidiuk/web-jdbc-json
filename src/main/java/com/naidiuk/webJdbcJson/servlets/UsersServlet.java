@@ -1,6 +1,5 @@
 package com.naidiuk.webJdbcJson.servlets;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.naidiuk.webJdbcJson.entity.User;
@@ -16,25 +15,27 @@ import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet("/users")
-public class UsersGetOneServlet extends HttpServlet {
+public class UsersServlet extends HttpServlet {
     private final ClientService clientService = new ClientServiceImpl();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userId = request.getParameter("id");
+        ObjectMapper objectMapper = getObjectMapper();
+        PrintWriter printWriter = response.getWriter();
+        User user;
         if (userId == null) {
             List<User> users = clientService.getAllUsers();
-            PrintWriter printWriter = response.getWriter();
-            for (User user : users) {
-                printWriter.write(objectMapper.writeValueAsString(user));
+            for (User aUser : users) {
+                printWriter.write(objectMapper.writeValueAsString(aUser));
             }
-            printWriter.flush();
-            printWriter.close();
+        } else if (userId.equals("max")) {
+            user = clientService.getUserWithMaxId();
+            printWriter.write(objectMapper.writeValueAsString(user));
+        } else {
+            user = clientService.getUserById(Integer.parseInt(userId));
+            printWriter.write(objectMapper.writeValueAsString(user));
         }
-        User user = clientService.getUserById(Integer.parseInt(userId));
-
-        PrintWriter printWriter = response.getWriter();
-        printWriter.write(convertToJson(user));
         printWriter.flush();
         printWriter.close();
     }
@@ -77,7 +78,7 @@ public class UsersGetOneServlet extends HttpServlet {
         return user;
     }
 
-    private ObjectMapper convertToJson() {
+    private ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         return objectMapper;
