@@ -3,7 +3,7 @@ package com.naidiuk.webJdbcJson.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.naidiuk.webJdbcJson.entity.User;
-import com.naidiuk.webJdbcJson.service.ClientImplementation;
+import com.naidiuk.webJdbcJson.service.ClientServiceImpl;
 import com.naidiuk.webJdbcJson.service.ClientService;
 
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +18,7 @@ public class UsersGetOnePlusRemainingYearsUntilRetirement extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ClientService clientService = new ClientImplementation();
+        ClientService clientService = new ClientServiceImpl();
 
         String userId = request.getParameter("id");
 

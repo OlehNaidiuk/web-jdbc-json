@@ -2,12 +2,12 @@ package com.naidiuk.webJdbcJson.service;
 
 import com.naidiuk.webJdbcJson.dao.UserDaoJDBC;
 import com.naidiuk.webJdbcJson.dao.UserDaoService;
+import com.naidiuk.webJdbcJson.dto.UserDto;
 import com.naidiuk.webJdbcJson.entity.User;
-import com.naidiuk.webJdbcJson.util.InsuranceExperienceCalculator;
 
 import java.util.List;
 
-public class ClientImplementation implements ClientService {
+public class ClientServiceImpl implements ClientService {
     private final UserDaoService userDaoService = new UserDaoJDBC();
 
     @Override
@@ -26,9 +26,7 @@ public class ClientImplementation implements ClientService {
     }
 
     @Override
-    public User getUserById(int id) {
-        return userDaoService.getUserById(id);
-    }
+    public User getUserById(int id) {return userDaoService.getUserById(id);}
 
     @Override
     public List<User> getAllUsers() {
@@ -41,9 +39,15 @@ public class ClientImplementation implements ClientService {
     }
 
     @Override
-    public int calculateRemainingYearsUntilRetirement(int id) {
+    public UserDto getUserByIdWithYearsUntilRetirement(int id) {
         User user = userDaoService.getUserById(id);
-        InsuranceExperienceCalculator insuranceExperienceCalculator = new InsuranceExperienceCalculator();
-        return insuranceExperienceCalculator.calculateRemainingYearsUntilRetirement(user.getWorkExperienceYears());
+        int yearsUntilRetirement = 30 - user.getWorkExperienceYears();
+        UserDto userDto = new UserDto();
+        userDto.setName(user.getName());
+        userDto.setSurname(user.getSurname());
+        userDto.setSalary(user.getSalary());
+        userDto.setWorkExperienceYears(user.getWorkExperienceYears());
+        userDto.setYearsUntilRetirement(yearsUntilRetirement);
+        return userDto;
     }
 }
