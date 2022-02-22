@@ -1,6 +1,7 @@
 package com.naidiuk.webJdbcJson.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.naidiuk.webJdbcJson.dao.UserDaoJDBC;
 import com.naidiuk.webJdbcJson.entity.User;
 import com.naidiuk.webJdbcJson.service.ClientService;
 import com.naidiuk.webJdbcJson.service.ClientServiceImpl;
@@ -14,12 +15,13 @@ import java.io.PrintWriter;
 
 @WebServlet("/users/max")
 public class UsersMaxServlet extends HttpServlet {
-    private final ClientService clientService = new ClientServiceImpl();
+    private final ClientService clientService = new ClientServiceImpl(new UserDaoJDBC());
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user = clientService.getUserWithMaxId();
         ObjectMapper objectMapper = UsersServlet.getObjectMapper();
+        response.setContentType("application/json");
         PrintWriter printWriter = response.getWriter();
         printWriter.write(objectMapper.writeValueAsString(user));
         printWriter.flush();

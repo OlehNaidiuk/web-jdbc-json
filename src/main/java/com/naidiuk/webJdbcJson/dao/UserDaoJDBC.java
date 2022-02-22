@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoJDBC implements UserDaoService {
+public class UserDaoJDBC implements UserDao {
     private static final String JDBC_POSTGRES_DRIVER = "org.postgresql.Driver";
     private static final String URL = "jdbc:postgresql://localhost:5432/Users";
     private static final String LOGIN = "postgres";
@@ -74,6 +74,7 @@ public class UserDaoJDBC implements UserDaoService {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 User foundedUser = new User();
                 while (resultSet.next()) {
+                    foundedUser.setId(resultSet.getInt("id"));
                     foundedUser.setName(resultSet.getString("name"));
                     foundedUser.setSurname(resultSet.getString("surname"));
                     foundedUser.setSalary(resultSet.getInt("salary"));
@@ -95,6 +96,7 @@ public class UserDaoJDBC implements UserDaoService {
             List<User> users = new ArrayList<>();
             while (resultSet.next()) {
                 User user = new User();
+                user.setId(resultSet.getInt("id"));
                 user.setName(resultSet.getString("name"));
                 user.setSurname(resultSet.getString("surname"));
                 user.setSalary(resultSet.getInt("salary"));
@@ -115,6 +117,7 @@ public class UserDaoJDBC implements UserDaoService {
         {
             User userWithMaxId = new User();
             while (resultSet.next()) {
+                userWithMaxId.setId(resultSet.getInt("id"));
                 userWithMaxId.setName(resultSet.getString("name"));
                 userWithMaxId.setSurname(resultSet.getString("surname"));
                 userWithMaxId.setSalary(resultSet.getInt("salary"));

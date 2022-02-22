@@ -1,7 +1,7 @@
 package com.naidiuk.webJdbcJson.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.naidiuk.webJdbcJson.dao.UserDaoJDBC;
 import com.naidiuk.webJdbcJson.entity.User;
 import com.naidiuk.webJdbcJson.service.ClientServiceImpl;
 import com.naidiuk.webJdbcJson.service.ClientService;
@@ -16,18 +16,17 @@ import java.util.List;
 
 @WebServlet("/users")
 public class UsersServlet extends HttpServlet {
-    private final ClientService clientService = new ClientServiceImpl();
+    private final ClientService clientService = new ClientServiceImpl(new UserDaoJDBC());
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userId = request.getParameter("id");
         ObjectMapper objectMapper = getObjectMapper();
+        response.setContentType("application/json");
         PrintWriter printWriter = response.getWriter();
         if (userId == null) {
             List<User> users = clientService.getAllUsers();
-            for (User user : users) {
-                printWriter.write(objectMapper.writeValueAsString(user));
-            }
+            printWriter.write(objectMapper.writeValueAsString(users));
         } else {
             User user = clientService.getUserById(Integer.parseInt(userId));
             printWriter.write(objectMapper.writeValueAsString(user));
@@ -71,8 +70,6 @@ public class UsersServlet extends HttpServlet {
     }
 
     public static ObjectMapper getObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        return objectMapper;
+        return new ObjectMapper();
     }
 }

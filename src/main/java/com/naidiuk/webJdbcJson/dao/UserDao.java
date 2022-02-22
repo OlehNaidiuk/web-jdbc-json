@@ -4,7 +4,7 @@ import com.naidiuk.webJdbcJson.entity.User;
 
 import java.util.List;
 
-public interface UserDaoService {
+public interface UserDao {
     void addUser(User user);
     void deleteUser(int id);
     void updateUser(User updatedUser, int id);

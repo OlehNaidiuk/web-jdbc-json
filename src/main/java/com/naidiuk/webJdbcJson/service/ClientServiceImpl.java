@@ -1,56 +1,52 @@
 package com.naidiuk.webJdbcJson.service;
 
-import com.naidiuk.webJdbcJson.dao.UserDaoJDBC;
-import com.naidiuk.webJdbcJson.dao.UserDaoService;
+import com.naidiuk.webJdbcJson.dao.UserDao;
 import com.naidiuk.webJdbcJson.dto.UserDto;
 import com.naidiuk.webJdbcJson.entity.User;
 
 import java.util.List;
 
 public class ClientServiceImpl implements ClientService {
-    private final UserDaoService userDaoService;
+    private final UserDao userDao;
 
-    public ClientServiceImpl() {
-        userDaoService = new UserDaoJDBC();
-    }
-
-    public ClientServiceImpl(UserDaoJDBC userDaoJDBC) {
-        this.userDaoService = userDaoJDBC;
+    public ClientServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
     public void addUser(User user) {
-        userDaoService.addUser(user);
+        userDao.addUser(user);
     }
 
     @Override
     public void deleteUser(int id) {
-        userDaoService.deleteUser(id);
+        userDao.deleteUser(id);
     }
 
     @Override
     public void updateUser(User updatedUser, int id) {
-        userDaoService.updateUser(updatedUser, id);
+        userDao.updateUser(updatedUser, id);
     }
 
     @Override
-    public User getUserById(int id) {return userDaoService.getUserById(id);}
+    public User getUserById(int id) {return userDao.getUserById(id);}
 
     @Override
     public List<User> getAllUsers() {
-        return userDaoService.getAllUsers();
+        return userDao.getAllUsers();
     }
 
     @Override
     public User getUserWithMaxId() {
-        return userDaoService.getUserWithMaxId();
+        return userDao.getUserWithMaxId();
     }
 
     @Override
     public UserDto getUserByIdWithYearsUntilRetirement(int id) {
-        User user = userDaoService.getUserById(id);
+        User user = userDao.getUserById(id);
         int yearsUntilRetirement = 30 - user.getWorkExperienceYears();
         UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setSurname(user.getSurname());
         userDto.setSalary(user.getSalary());

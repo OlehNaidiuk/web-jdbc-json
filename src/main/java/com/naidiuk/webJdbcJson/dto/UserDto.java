@@ -1,13 +1,20 @@
 package com.naidiuk.webJdbcJson.dto;
 
 public class UserDto {
+    private int id;
     private String name;
     private String surname;
     private int salary;
     private int workExperienceYears;
     private int yearsUntilRetirement;
 
-    public UserDto() {}
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
