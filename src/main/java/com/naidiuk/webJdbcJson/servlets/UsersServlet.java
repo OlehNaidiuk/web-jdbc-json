@@ -23,17 +23,13 @@ public class UsersServlet extends HttpServlet {
         String userId = request.getParameter("id");
         ObjectMapper objectMapper = getObjectMapper();
         PrintWriter printWriter = response.getWriter();
-        User user;
         if (userId == null) {
             List<User> users = clientService.getAllUsers();
-            for (User aUser : users) {
-                printWriter.write(objectMapper.writeValueAsString(aUser));
+            for (User user : users) {
+                printWriter.write(objectMapper.writeValueAsString(user));
             }
-        } else if (userId.equals("max")) {
-            user = clientService.getUserWithMaxId();
-            printWriter.write(objectMapper.writeValueAsString(user));
         } else {
-            user = clientService.getUserById(Integer.parseInt(userId));
+            User user = clientService.getUserById(Integer.parseInt(userId));
             printWriter.write(objectMapper.writeValueAsString(user));
         }
         printWriter.flush();
@@ -43,23 +39,19 @@ public class UsersServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         User user = createUserFromRequest(request);
-
         clientService.addUser(user);
     }
 
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getParameter("id");
-
         clientService.deleteUser(Integer.parseInt(userId));
     }
 
     @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getParameter("id");
-
         User updatedUser = createUserFromRequest(request);
-
         clientService.updateUser(updatedUser, Integer.parseInt(userId));
     }
 
@@ -78,7 +70,7 @@ public class UsersServlet extends HttpServlet {
         return user;
     }
 
-    private ObjectMapper getObjectMapper() {
+    public static ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         return objectMapper;
