@@ -1,7 +1,6 @@
 package com.naidiuk.webJdbcJson.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.naidiuk.webJdbcJson.dao.UserDaoJDBC;
 import com.naidiuk.webJdbcJson.entity.User;
 import com.naidiuk.webJdbcJson.service.ClientServiceImpl;
 import com.naidiuk.webJdbcJson.service.ClientService;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @WebServlet("/users")
 public class UsersServlet extends HttpServlet {
-    private final ClientService clientService = new ClientServiceImpl(new UserDaoJDBC());
+    private final ClientService clientService = new ClientServiceImpl();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

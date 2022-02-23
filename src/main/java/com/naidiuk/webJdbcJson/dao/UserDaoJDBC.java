@@ -16,10 +16,10 @@ public class UserDaoJDBC implements UserDao {
     private static final String INSERT_USER = "INSERT INTO users (name, surname, salary, work_experience_years) VALUES (?, ?, ?, ?)";
     private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
     private static final String UPDATE_USER = "UPDATE users SET name=?, surname=?, salary=?,"
-            + " work_experience_years=? WHERE id=?";
-    private static final String SELECT_USER = "SELECT * FROM users WHERE id=?";
+                                                + " work_experience_years=? WHERE id=?";
     private static final String SELECT_ALL_USERS = "SELECT * FROM users";
-    private static final String SELECT_USER_WITH_MAX_ID = "SELECT * FROM users WHERE id=(SELECT MAX(id) FROM users)";
+    private static final String SELECT_USER = SELECT_ALL_USERS + " WHERE id=?";
+    private static final String SELECT_USER_WITH_MAX_ID = SELECT_ALL_USERS + " WHERE id=(SELECT MAX(id) FROM users)";
 
     @Override
     public void addUser(User user) {
@@ -72,15 +72,7 @@ public class UserDaoJDBC implements UserDao {
             preparedStatement.setInt(1, id);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                User foundedUser = new User();
-                while (resultSet.next()) {
-                    foundedUser.setId(resultSet.getInt("id"));
-                    foundedUser.setName(resultSet.getString("name"));
-                    foundedUser.setSurname(resultSet.getString("surname"));
-                    foundedUser.setSalary(resultSet.getInt("salary"));
-                    foundedUser.setWorkExperienceYears(resultSet.getInt("work_experience_years"));
-                }
-                return foundedUser;
+                return getUser(resultSet);
             }
         } catch (SQLException e) {
             throw new JDBCConnectionException("Access error or connection is closed", e);
@@ -115,28 +107,32 @@ public class UserDaoJDBC implements UserDao {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(SELECT_USER_WITH_MAX_ID))
         {
-            User userWithMaxId = new User();
-            while (resultSet.next()) {
-                userWithMaxId.setId(resultSet.getInt("id"));
-                userWithMaxId.setName(resultSet.getString("name"));
-                userWithMaxId.setSurname(resultSet.getString("surname"));
-                userWithMaxId.setSalary(resultSet.getInt("salary"));
-                userWithMaxId.setWorkExperienceYears(resultSet.getInt("work_experience_years"));
-            }
-            return userWithMaxId;
+            return getUser(resultSet);
         } catch (SQLException e) {
             throw new JDBCConnectionException("Access error or connection is closed", e);
         }
+    }
+
+    private User getUser(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        while (resultSet.next()) {
+            user.setId(resultSet.getInt("id"));
+            user.setName(resultSet.getString("name"));
+            user.setSurname(resultSet.getString("surname"));
+            user.setSalary(resultSet.getInt("salary"));
+            user.setWorkExperienceYears(resultSet.getInt("work_experience_years"));
+        }
+        return user;
     }
 
     private Connection connect() {
         try {
             Class.forName(JDBC_POSTGRES_DRIVER);
             return DriverManager.getConnection(URL, LOGIN, PASSWORD);
-        } catch (SQLException e) {
-            throw new JDBCConnectionException("Unable to connect to database", e);
         } catch (ClassNotFoundException e) {
             throw new JDBCDriverException("Wrong driver for this DBMS", e);
+        }catch (SQLException e) {
+            throw new JDBCConnectionException("Unable to connect to database", e);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.naidiuk.webJdbcJson.service;
 
 import com.naidiuk.webJdbcJson.dao.UserDao;
+import com.naidiuk.webJdbcJson.dao.UserDaoJDBC;
 import com.naidiuk.webJdbcJson.dto.UserDto;
 import com.naidiuk.webJdbcJson.entity.User;
 
@@ -8,6 +9,10 @@ import java.util.List;
 
 public class ClientServiceImpl implements ClientService {
     private final UserDao userDao;
+
+    public ClientServiceImpl() {
+        userDao = new UserDaoJDBC();
+    }
 
     public ClientServiceImpl(UserDao userDao) {
         this.userDao = userDao;

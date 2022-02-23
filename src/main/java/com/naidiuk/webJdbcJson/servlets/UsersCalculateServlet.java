@@ -1,7 +1,6 @@
 package com.naidiuk.webJdbcJson.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.naidiuk.webJdbcJson.dao.UserDaoJDBC;
 import com.naidiuk.webJdbcJson.dto.UserDto;
 import com.naidiuk.webJdbcJson.service.ClientServiceImpl;
 import com.naidiuk.webJdbcJson.service.ClientService;
@@ -13,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/users/user-with-years-until-retirement")
-public class UsersWithYearsUntilRetirementServlet extends HttpServlet {
-    private final ClientService clientService = new ClientServiceImpl(new UserDaoJDBC());
+@WebServlet("/users/calculate")
+public class UsersCalculateServlet extends HttpServlet {
+    private final ClientService clientService = new ClientServiceImpl();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
